@@ -1,69 +1,301 @@
-# JavaScript-Function
-
-typeof
-
-valuof
-
-this
-
-symbol
-
-建立全新的 Symbol
-
-symbol.for
-
-建立或取得全域共享的 Symbol
-
-symbol.keyFor
-
-symbol.iterator
-
-一個物件要如何被迭代
-
-例如：
-
-let arr = [10, 20, 30];
-
-for (let x of arr) {
-    console.log(x);
-}
-
-輸出：
-
-10
-20
-30
-
-範例:
-
-let arr = [10, 20, 30];
-
-let it = arr[Symbol.iterator]();
-
-console.log(it.next());
-console.log(it.next());
-console.log(it.next());
-console.log(it.next());
-
-輸出：
-
-{ value: 10, done: false }
-{ value: 20, done: false }
-{ value: 30, done: false }
-{ value: undefined, done: true }
-
-
-Symbol.iterator 就是：
-
-定義物件如何被 for...of、展開運算子(...)、Array.from() 逐一取出元素的規則。
-
 # JavaScript 重點整理
 
-## 1. 解構賦值（Destructuring Assignment）
+# 1. 變數宣告
+
+## let
+
+可重新賦值，不可重複宣告。
 
 ```js
-let point = [80, 90, 100]
-let [x, y, z] = point
+let age = 18
+age = 20
+```
+
+## const
+
+不可重新賦值。
+
+```js
+const PI = 3.14
+```
+
+## var
+
+舊式宣告方式，較少使用。
+
+```js
+var name = "Tom"
+```
+
+---
+
+# 2. 基本資料型態
+
+```js
+Number
+String
+Boolean
+Undefined
+Null
+Object
+Symbol
+BigInt
+```
+
+範例：
+
+```js
+let age = 18
+let name = "Amy"
+let pass = true
+let score = null
+let test
+```
+
+---
+
+# 3. typeof
+
+查看資料型態。
+
+```js
+console.log(typeof 123)
+```
+
+輸出：
+
+```js
+number
+```
+
+範例：
+
+```js
+typeof 123          // number
+typeof "hello"      // string
+typeof true         // boolean
+typeof undefined    // undefined
+typeof Symbol()     // symbol
+```
+
+---
+
+# 4. 字串模板 Template Literal
+
+```js
+let name = "Amy"
+
+console.log(`Hello ${name}`)
+```
+
+輸出：
+
+```js
+Hello Amy
+```
+
+---
+
+# 5. 條件判斷
+
+## if
+
+```js
+if (score >= 60) {
+    console.log("Pass")
+}
+```
+
+## if...else
+
+```js
+if (score >= 60) {
+    console.log("Pass")
+}
+else {
+    console.log("Fail")
+}
+```
+
+## switch
+
+```js
+switch(day){
+    case 1:
+        console.log("Monday")
+        break
+
+    default:
+        console.log("Other")
+}
+```
+
+---
+
+# 6. 比較運算子
+
+| 運算子 | 說明 |
+|---------|---------|
+| == | 值相等 |
+| === | 值與型別都相等 |
+| != | 不等於 |
+| !== | 值或型別不同 |
+| > | 大於 |
+| < | 小於 |
+| >= | 大於等於 |
+| <= | 小於等於 |
+
+範例：
+
+```js
+5 == "5"     // true
+5 === "5"    // false
+```
+
+---
+
+# 7. 迴圈
+
+## for
+
+```js
+for(let i = 0; i < 5; i++){
+    console.log(i)
+}
+```
+
+## while
+
+```js
+let i = 0
+
+while(i < 5){
+    console.log(i)
+    i++
+}
+```
+
+## for...of
+
+遍歷陣列。
+
+```js
+let arr = [1,2,3]
+
+for(let x of arr){
+    console.log(x)
+}
+```
+
+## for...in
+
+遍歷物件屬性。
+
+```js
+let obj = {
+    name:"Amy",
+    age:18
+}
+
+for(let key in obj){
+    console.log(key)
+}
+```
+
+---
+
+# 8. 函式 Function
+
+```js
+function add(a,b){
+    return a+b
+}
+```
+
+呼叫：
+
+```js
+console.log(add(3,5))
+```
+
+---
+
+# 9. 箭頭函式 Arrow Function
+
+```js
+const add = (a,b)=>{
+    return a+b
+}
+```
+
+簡寫：
+
+```js
+const add = (a,b)=>a+b
+```
+
+---
+
+# 10. 陣列 Array
+
+建立：
+
+```js
+let arr = [10,20,30]
+```
+
+常用方法：
+
+```js
+arr.push(40)
+```
+
+加入尾端元素。
+
+```js
+arr.pop()
+```
+
+移除尾端元素。
+
+```js
+arr.shift()
+```
+
+移除第一個元素。
+
+```js
+arr.unshift(5)
+```
+
+加入第一個元素。
+
+---
+
+# 11. 物件 Object
+
+```js
+let student = {
+    name:"Amy",
+    age:18
+}
+```
+
+存取：
+
+```js
+student.name
+student["age"]
+```
+
+---
+
+# 12. 解構賦值
+
+```js
+let point = [80,90,100]
+
+let [x,y,z] = point
 ```
 
 結果：
@@ -76,113 +308,94 @@ z = 100
 
 ---
 
-## 2. Rest Operator
+# 13. Rest Operator
 
 ```js
-let [head, ...tail] = point
+let [head,...tail] = point
 ```
 
 結果：
 
 ```js
 head = 80
-tail = [90, 100]
+tail = [90,100]
 ```
-
-說明：
-
-- `head` 取得第一個元素
-- `...tail` 收集剩餘元素成陣列
 
 ---
 
-## 3. 三元運算子（Ternary Operator）
+# 14. Spread Operator
 
-語法：
+複製陣列：
 
 ```js
-條件 ? 成立時執行 : 不成立時執行
+let arr1 = [1,2,3]
+
+let arr2 = [...arr1]
+```
+
+合併陣列：
+
+```js
+let arr3 = [...arr1,...arr2]
+```
+
+---
+
+# 15. 三元運算子
+
+```js
+條件 ? A : B
 ```
 
 例如：
 
 ```js
-head ? head + sum(tail) : 0
-```
-
-等同於：
-
-```js
-if (head) {
-    return head + sum(tail)
-} else {
-    return 0
-}
+let result = score >= 60 ? "Pass" : "Fail"
 ```
 
 ---
 
-## 4. 遞迴（Recursion）
+# 16. 遞迴 Recursion
 
 ```js
-function sum([head, ...tail]) {
-    return head ? head + sum(tail) : 0
-}
-
-console.log(sum([1, 2, 3, 4, 5]))
-```
-
-輸出：
-
-```js
-15
-```
-
-較安全寫法：
-
-```js
-function sum([head, ...tail]) {
+function sum([head,...tail]){
     return head !== undefined
         ? head + sum(tail)
         : 0
 }
 ```
 
-避免遇到 `0` 時提前結束。
-
 ---
 
-## 5. valueOf()
+# 17. valueOf()
 
-取得物件的原始值（Primitive Value）。
+取得原始值。
 
 ```js
 let num = new Number(100)
 
-console.log(num.valueOf())
+num.valueOf()
 ```
 
-輸出：
+結果：
 
 ```js
 100
 ```
 
-常用於數值運算。
-
 ---
 
-## 6. toString()
+# 18. toString()
 
-將資料轉換成字串。
+轉換成字串。
 
 ```js
-let arr = [1, 2, 3]
+let arr = [1,2,3]
 
-console.log(arr.toString())
+arr.toString()
 ```
 
-輸出：
+結果：
 
 ```js
 "1,2,3"
@@ -190,171 +403,162 @@ console.log(arr.toString())
 
 ---
 
-## 7. Symbol()
+# 19. Symbol()
 
-建立唯一的 Symbol。
+建立唯一 Symbol。
 
 ```js
 let s1 = Symbol("id")
 let s2 = Symbol("id")
-
-console.log(s1 === s2)
 ```
 
-輸出：
+```js
+s1 === s2
+```
+
+結果：
 
 ```js
 false
 ```
 
-每次建立都是不同的 Symbol。
-
 ---
 
-## 8. Symbol.for()
+# 20. Symbol.for()
 
-從全域 Symbol 註冊表取得或建立 Symbol。
+全域共享 Symbol。
 
 ```js
 let s1 = Symbol.for("id")
 let s2 = Symbol.for("id")
-
-console.log(s1 === s2)
 ```
 
-輸出：
+```js
+s1 === s2
+```
+
+結果：
 
 ```js
 true
 ```
 
-相同 key 會取得同一個 Symbol。
-
 ---
 
-## 9. Symbol.keyFor()
+# 21. Symbol.iterator
 
-取得 Symbol.for() 的 key。
-
-```js
-let s = Symbol.for("student")
-
-console.log(Symbol.keyFor(s))
-```
-
-輸出：
+定義如何被遍歷。
 
 ```js
-"student"
-```
-
----
-
-## 10. Symbol.iterator
-
-定義物件如何被遍歷（Iterate）。
-
-常用於：
-
-```js
-for...of
-[...array]
-Array.from()
-```
-
-範例：
-
-```js
-let arr = [10, 20, 30]
-
 let it = arr[Symbol.iterator]()
+```
 
-console.log(it.next())
+```js
+it.next()
 ```
 
 輸出：
-
-```js
-{ value: 10, done: false }
-```
-
-Iterator 格式：
 
 ```js
 {
-    value: 值,
-    done: 是否結束
+    value:10,
+    done:false
 }
 ```
 
 ---
 
-## 11. throw
+# 22. throw
 
-主動拋出錯誤。
+主動產生錯誤。
 
 ```js
-throw new Error("發生錯誤")
+throw new Error("Error")
 ```
 
-搭配 try...catch：
+---
+
+# 23. try...catch
+
+捕捉錯誤。
 
 ```js
-try {
-    throw new Error("帳號不存在")
+try{
+    throw new Error("Error")
 }
-catch(err) {
+catch(err){
     console.log(err.message)
 }
 ```
 
-輸出：
-
-```js
-帳號不存在
-```
-
 ---
 
-## 12. try...catch
+# 24. API
 
-捕捉程式錯誤。
+API（Application Programming Interface）
 
-```js
-try {
-    可能出錯的程式
-}
-catch(err) {
-    錯誤處理
-}
-```
+用途：
+
+- 讓不同程式互相溝通
+- 取得資料
+- 呼叫服務
 
 範例：
 
 ```js
-try {
-    throw "Error"
-}
-catch(err) {
-    console.log(err)
+fetch(url)
+```
+
+---
+
+# 25. JSON
+
+物件格式資料。
+
+```js
+{
+    "name":"Amy",
+    "age":18
 }
 ```
+
+轉換：
+
+```js
+JSON.stringify(obj)
+```
+
+物件 → JSON
+
+```js
+JSON.parse(json)
+```
+
+JSON → 物件
 
 ---
 
 # 考試重點速查表
 
-| 語法 | 功能 |
+| 主題 | 重點 |
 |--------|--------|
-| `[a,b] = arr` | 解構賦值 |
-| `...tail` | 收集剩餘元素 |
-| `condition ? A : B` | 三元運算子 |
-| Recursion | 函式呼叫自己 |
-| `valueOf()` | 取得原始值 |
-| `toString()` | 轉字串 |
-| `Symbol()` | 唯一 Symbol |
-| `Symbol.for()` | 共用 Symbol |
-| `Symbol.keyFor()` | 取得 Symbol key |
-| `Symbol.iterator` | 定義迭代規則 |
-| `throw` | 拋出錯誤 |
-| `try...catch` | 捕捉錯誤 |
+| let | 可修改 |
+| const | 不可修改 |
+| typeof | 查看型別 |
+| === | 值與型別都相同 |
+| Array | 陣列 |
+| Object | 物件 |
+| Function | 函式 |
+| Arrow Function | 箭頭函式 |
+| Destructuring | 解構賦值 |
+| Rest | 收集剩餘元素 |
+| Spread | 展開元素 |
+| Symbol | 唯一值 |
+| Symbol.for | 共用 Symbol |
+| Symbol.iterator | 迭代器 |
+| valueOf | 原始值 |
+| toString | 字串表示 |
+| throw | 拋出錯誤 |
+| try...catch | 捕捉錯誤 |
+| JSON | 資料交換格式 |
+| API | 程式溝通介面 |
