@@ -562,3 +562,557 @@ JSON → 物件
 | try...catch | 捕捉錯誤 |
 | JSON | 資料交換格式 |
 | API | 程式溝通介面 |
+
+
+# JavaScript 物件導向（OOP）
+
+---
+
+# 1. 物件 Object
+
+建立物件：
+
+```js
+let student = {
+    name: "Amy",
+    age: 18,
+
+    sayHello() {
+        console.log("Hello")
+    }
+}
+```
+
+存取屬性：
+
+```js
+console.log(student.name)
+console.log(student["age"])
+```
+
+呼叫方法：
+
+```js
+student.sayHello()
+```
+
+---
+
+# 2. this
+
+代表目前物件本身。
+
+```js
+let student = {
+    name: "Amy",
+
+    introduce() {
+        console.log(`我是 ${this.name}`)
+    }
+}
+```
+
+輸出：
+
+```js
+我是 Amy
+```
+
+---
+
+# 3. 建構式 Constructor Function
+
+ES6 出現前建立物件的方式。
+
+```js
+function Student(name, age) {
+    this.name = name
+    this.age = age
+}
+```
+
+建立物件：
+
+```js
+let s1 = new Student("Amy", 18)
+let s2 = new Student("Tom", 20)
+```
+
+結果：
+
+```js
+s1.name // Amy
+s2.name // Tom
+```
+
+---
+
+# 4. new 的作用
+
+```js
+let s1 = new Student("Amy", 18)
+```
+
+new 會：
+
+1. 建立空物件
+2. this 指向新物件
+3. 執行建構式
+4. 回傳新物件
+
+相當於：
+
+```js
+let obj = {}
+
+Student.call(obj, "Amy", 18)
+
+return obj
+```
+
+---
+
+# 5. 原型物件 Prototype
+
+每個函式都有 prototype。
+
+```js
+function Student(name) {
+    this.name = name
+}
+
+console.log(Student.prototype)
+```
+
+---
+
+# 6. 在 Prototype 加入方法
+
+錯誤寫法：
+
+```js
+function Student(name) {
+    this.name = name
+
+    this.sayHello = function() {
+        console.log("Hello")
+    }
+}
+```
+
+每建立一次物件就產生一份函式。
+
+---
+
+較佳寫法：
+
+```js
+function Student(name) {
+    this.name = name
+}
+
+Student.prototype.sayHello = function() {
+    console.log("Hello")
+}
+```
+
+建立：
+
+```js
+let s1 = new Student("Amy")
+let s2 = new Student("Tom")
+```
+
+所有物件共用同一個方法。
+
+---
+
+# 7. Prototype Chain 原型鏈
+
+```js
+console.log(s1.__proto__ === Student.prototype)
+```
+
+結果：
+
+```js
+true
+```
+
+關係：
+
+```text
+s1
+ ↓
+Student.prototype
+ ↓
+Object.prototype
+ ↓
+null
+```
+
+---
+
+# 8. instanceof
+
+判斷物件是否由某建構式建立。
+
+```js
+let s1 = new Student("Amy")
+
+console.log(s1 instanceof Student)
+```
+
+結果：
+
+```js
+true
+```
+
+---
+
+# 9. 類別 Class（ES6）
+
+ES6 新語法。
+
+```js
+class Student {
+
+    constructor(name, age) {
+        this.name = name
+        this.age = age
+    }
+
+    sayHello() {
+        console.log("Hello")
+    }
+}
+```
+
+建立：
+
+```js
+let s1 = new Student("Amy", 18)
+```
+
+---
+
+# 10. constructor
+
+類別中的建構函式。
+
+```js
+class Student {
+
+    constructor(name) {
+        this.name = name
+    }
+}
+```
+
+執行：
+
+```js
+let s1 = new Student("Amy")
+```
+
+自動呼叫 constructor。
+
+---
+
+# 11. 類別方法
+
+```js
+class Student {
+
+    constructor(name) {
+        this.name = name
+    }
+
+    introduce() {
+        console.log(`我是 ${this.name}`)
+    }
+}
+```
+
+使用：
+
+```js
+s1.introduce()
+```
+
+---
+
+# 12. Getter
+
+讀取屬性時自動執行。
+
+```js
+class Student {
+
+    constructor(name) {
+        this.name = name
+    }
+
+    get upperName() {
+        return this.name.toUpperCase()
+    }
+}
+```
+
+使用：
+
+```js
+console.log(s1.upperName)
+```
+
+注意：
+
+```js
+不要加 ()
+```
+
+---
+
+# 13. Setter
+
+設定屬性時自動執行。
+
+```js
+class Student {
+
+    constructor(name) {
+        this.name = name
+    }
+
+    set studentName(value) {
+        this.name = value
+    }
+}
+```
+
+使用：
+
+```js
+s1.studentName = "Tom"
+```
+
+---
+
+# 14. static
+
+靜態方法。
+
+屬於類別，不屬於物件。
+
+```js
+class MathTool {
+
+    static add(a, b) {
+        return a + b
+    }
+}
+```
+
+呼叫：
+
+```js
+MathTool.add(3, 5)
+```
+
+不能：
+
+```js
+let m = new MathTool()
+
+m.add()
+```
+
+---
+
+# 15. 繼承 extends
+
+```js
+class Animal {
+
+    eat() {
+        console.log("eat")
+    }
+}
+
+class Dog extends Animal {
+
+}
+```
+
+使用：
+
+```js
+let dog = new Dog()
+
+dog.eat()
+```
+
+輸出：
+
+```js
+eat
+```
+
+---
+
+# 16. super
+
+呼叫父類別 constructor。
+
+```js
+class Animal {
+
+    constructor(name) {
+        this.name = name
+    }
+}
+
+class Dog extends Animal {
+
+    constructor(name, age) {
+        super(name)
+
+        this.age = age
+    }
+}
+```
+
+---
+
+# 17. 方法覆寫 Override
+
+```js
+class Animal {
+
+    speak() {
+        console.log("Animal")
+    }
+}
+
+class Dog extends Animal {
+
+    speak() {
+        console.log("Woof")
+    }
+}
+```
+
+輸出：
+
+```js
+Woof
+```
+
+---
+
+# 18. Object.create()
+
+建立指定原型的物件。
+
+```js
+let animal = {
+    eat() {
+        console.log("eat")
+    }
+}
+
+let dog = Object.create(animal)
+```
+
+結果：
+
+```text
+dog
+ ↓
+animal
+ ↓
+Object.prototype
+```
+
+---
+
+# 19. Object.keys()
+
+取得所有屬性名稱。
+
+```js
+let obj = {
+    name: "Amy",
+    age: 18
+}
+
+console.log(Object.keys(obj))
+```
+
+輸出：
+
+```js
+["name", "age"]
+```
+
+---
+
+# 20. Object.values()
+
+取得所有值。
+
+```js
+console.log(Object.values(obj))
+```
+
+輸出：
+
+```js
+["Amy", 18]
+```
+
+---
+
+# 21. Object.entries()
+
+轉成鍵值對陣列。
+
+```js
+console.log(Object.entries(obj))
+```
+
+輸出：
+
+```js
+[
+  ["name", "Amy"],
+  ["age", 18]
+]
+```
+
+---
+
+# 物件導向考試速查表
+
+| 主題 | 功能 |
+|--------|--------|
+| Object | 物件 |
+| this | 目前物件 |
+| Constructor | 建構式 |
+| new | 建立物件 |
+| prototype | 原型物件 |
+| Prototype Chain | 原型鏈 |
+| instanceof | 判斷類型 |
+| class | 類別 |
+| constructor | 建構函式 |
+| get | Getter |
+| set | Setter |
+| static | 靜態方法 |
+| extends | 繼承 |
+| super | 呼叫父類別 |
+| override | 方法覆寫 |
+| Object.create() | 指定原型建立物件 |
+| Object.keys() | 取得所有 key |
+| Object.values() | 取得所有 value |
+| Object.entries() | 取得所有鍵值對 |
