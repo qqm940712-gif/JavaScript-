@@ -1,13 +1,12 @@
-# JavaScript-
-function
+# JavaScript-Function
 
-typeof
+##typeof
 
-valuof
+##valuof
 
-symbol
+##symbol
 
-symbol.for
+##symbol.for
 
-symbol.keyFor
+##symbol.keyFor
 
